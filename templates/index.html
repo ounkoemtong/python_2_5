@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/4.0.0/jquery.min.js"
+        integrity="sha512-YuCuk5nNmVIUfKROKeV3fpZZ5Vt9vsnq8nExr5JwEJc2r1YDVmDfujcq373eHIzjqdxwCzoKpxngIaAdRUyg3A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+
+
+    <div class="container shadow rounded p-1 mt-5">
+        <div class="d-flex justify-content-end m-3">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal">Add User</button>
+        </div>
+
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content ">
+                    <form action="/insert" enctype="multipart/form-data" method="post" class="p-5">
+                        <h2 class="text-center fw-bold">Add User</h2>
+                        <div>
+                            <label for="">Name</label>
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                        <div>
+                            <label for="">Age</label>
+                            <input type="number" class="form-control" name="age">
+                        </div>
+                        <div>
+                            <label for="">Gender</label>
+                            <input type="text" class="form-control" name="gender">
+                        </div>
+                        <div>
+                            <label for="">Grade</label>
+                            <input type="text" class="form-control" name="grade">
+                        </div>
+                        <div>
+                            <label for="">Image</label>
+                            <input type="file" id="imageinput" name="image" class="form-control" name="grade">
+                        </div>
+                        <img src="" width="100%" id="imagepreview" alt="">
+
+                        <div class="mt-2 d-flex gap-1">
+                            <button class="btn btn-outline-danger" type="button">Cancel</button>
+                            <button class="btn btn-outline-primary" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table text-center table-bordered align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Grade</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in myuser %}
+
+                <tr>
+                    <th scope="row">{{user[0]}}</th>
+                    <td>
+                        <img width="60px" style="border-radius: 50%;"
+                            src="{{ url_for('static', filename='uploads/' + user[5]) }}">
+                    </td>
+                    <td>{{user[1]}}</td>
+                    <td>{{user[2]}}</td>
+                    <td>{{user[3]}}</td>
+                    <td>{{user[4]}}</td>
+                    <td>
+                        <button class="btn btn-outline-warning" data-bs-toggle="modal"
+                            data-bs-target="#update{{user[0]}}">UPDATE</button>
+                        <button class="btn btn-outline-danger" data-bs-target="#delete{{user[0]}}"
+                            data-bs-toggle="modal">DELETE</button>
+                    </td>
+                </tr>
+                <div class="modal fade" id="update{{user[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content  p-5">
+                            <form action="/update" method="post">
+                                <h2 class="text-center fw-bold">UPDATE USER</h2>
+                                <div>
+                                    <label for="">Name</label>
+                                    <input type="hidden" value="{{user[0]}}" class="form-control" name="update_id">
+                                    <input type="text" value="{{user[1]}}" class="form-control" name="update_name">
+                                </div>
+                                <div>
+                                    <label for="">Age</label>
+                                    <input type="number" value="{{user[2]}}" class="form-control" name="update_age">
+                                </div>
+                                <div>
+                                    <label for="">Gender</label>
+                                    <input type="text" value="{{user[3]}}" class="form-control" name="update_gender">
+                                </div>
+                                <div>
+                                    <label for="">Grade</label>
+                                    <input type="text" value="{{user[4]}}" class="form-control" name="update_grade">
+                                </div>
+
+                                <div class="mt-2 d-flex gap-1">
+                                    <button class="btn btn-outline-danger" type="button">Cancel</button>
+                                    <button class="btn btn-outline-primary" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="delete{{user[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content p-4">
+                            <h1 class="text-center">Are you sure ?</h1>
+
+                            <form action="/delete" method="post">
+                                <input type="hidden" value="{{user[0]}}" name="delete_id">
+                                <div class="d-flex justify-content-center gap-2 mt-3">
+                                    <button class="btn btn-outline-danger">Cancel</button>
+                                    <button class="btn btn-outline-primary">Confirm</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+    <script>
+        $('#imageinput').change(function () {
+            const file = this.files[0]
+            if (file) {
+                $("#imagepreview").attr('src', URL.createObjectURL(file))
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>
