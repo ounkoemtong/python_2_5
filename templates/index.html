@@ -96,7 +96,7 @@
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content  p-5">
-                            <form action="/update" method="post">
+                            <form action="/update" enctype="multipart/form-data" method="post">
                                 <h2 class="text-center fw-bold">UPDATE USER</h2>
                                 <div>
                                     <label for="">Name</label>
@@ -115,6 +115,12 @@
                                     <label for="">Grade</label>
                                     <input type="text" value="{{user[4]}}" class="form-control" name="update_grade">
                                 </div>
+                                <div>
+                                    <label for="">Image</label>
+                                    <input type="file" value="{{user[4]}}" class="form-control" name="update_image" >
+                                </div>
+
+                                
 
                                 <div class="mt-2 d-flex gap-1">
                                     <button class="btn btn-outline-danger" type="button">Cancel</button>
