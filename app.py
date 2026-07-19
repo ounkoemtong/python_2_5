@@ -31,7 +31,7 @@ def index():
     connection = connect_db()
     cursor = connection.cursor()
 
-    cursor.execute("SELECT * FROM users ")
+    cursor.execute("SELECT * FROM products ")
     user = cursor.fetchall() 
 
     return render_template("index.html",myuser = user)
@@ -43,10 +43,9 @@ def insert():
     cursor = connection.cursor()
 
     name = request.form['name']
-    age = request.form['age']
-    gender = request.form['gender']
-    grade = request.form['grade']
-
+    price = request.form['price']
+    qty = request.form['qty']
+    desctiption = request.form['description']
     image = request.files['image']
 
     new_name = ""
@@ -62,8 +61,8 @@ def insert():
 
 
 
-    sql = "INSERT INTO users (NAME,AGE,GENDER,GRADE,IMAGE) VALUES (%s,%s,%s,%s,%s) "
-    cursor.execute(sql,(name,age,gender,grade,new_name))
+    sql = "INSERT INTO products (name,price,qty,description,image) VALUES (%s,%s,%s,%s,%s) "
+    cursor.execute(sql,(name,price,qty,desctiption,new_name))
 
     connection.commit()
 
@@ -103,6 +102,18 @@ def delete ():
 
     return redirect(url_for('index'))
 
+
+
+@app.route('/userpage')
+def userpage ():
+    myconnection = connect_db()
+    cursor = myconnection.cursor()
+
+
+    cursor.execute (" SELECT * FROM products")
+    data = cursor.fetchall()
+
+    return render_template ('userpage.html',data = data)
 
 if __name__ == "__main__":
     app.run(debug=True)

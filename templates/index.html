@@ -19,7 +19,10 @@
 
 
     <div class="container shadow rounded p-1 mt-5">
-        <div class="d-flex justify-content-end m-3">
+        <div class="d-flex justify-content-end m-3 gap-2">
+            <a href="{{url_for('userpage')}}">
+                <button class="btn btn-outline-dark">userpage</button>
+            </a>
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal">Add User</button>
         </div>
 
@@ -33,16 +36,16 @@
                             <input type="text" class="form-control" name="name">
                         </div>
                         <div>
-                            <label for="">Age</label>
-                            <input type="number" class="form-control" name="age">
+                            <label for="">Price</label>
+                            <input type="number" class="form-control" name="price">
                         </div>
                         <div>
-                            <label for="">Gender</label>
-                            <input type="text" class="form-control" name="gender">
+                            <label for="">Quantity</label>
+                            <input type="number" class="form-control" name="qty">
                         </div>
                         <div>
-                            <label for="">Grade</label>
-                            <input type="text" class="form-control" name="grade">
+                            <label for="">desctiption</label>
+                            <input type="text" class="form-control" name="description">
                         </div>
                         <div>
                             <label for="">Image</label>
@@ -64,12 +67,11 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Image</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Grade</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">qty</th>
+                    <th scope="col">description</th>
+                    <th scope="col">image</th>
                 </tr>
             </thead>
             <tbody>
