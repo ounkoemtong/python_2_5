@@ -79,9 +79,18 @@ def update():
     gender = request.form['update_gender']
     grade = request.form['update_grade']
 
+    image = request.files['update_image']
 
-    sql = " UPDATE users SET NAME= %s  , AGE = %s , GENDER = %s , GRADE = %s WHERE ID = %s"
-    cursor.execute(sql,(name,age,gender,grade,id))
+    if image :
+        split_image = os.path.split(image.filename)[1]
+        new_name = str(uuid.uuid4()) + split_image
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'],new_name))
+
+
+
+
+    sql = " UPDATE users SET NAME= %s  , AGE = %s , GENDER = %s , GRADE = %s,IMAGE = %s WHERE ID = %s"
+    cursor.execute(sql,(name,age,gender,grade,new_name,id))
 
     connection.commit()
 
